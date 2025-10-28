@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> About Me!</title>
+    </head>
+    <style>
+        body{
+            background-image: url("assets/Aero.gif");
+            background-size:cover;
+             background-repeat: no-repeat; 
+             background-attachment: fixed;
+        }
+        .card {
+            background-color: rgba(221, 208, 236, 0.5);
+            color: #fdfeff;
+            text-align: center;
+            padding: 40px;
+            border: 2px solid #9aa7d1;
+            box-shadow: 0 4px 10px rgb(0, 0, 0, 0.5);
+            width: 400px;
+            transition: background-color 0.3s ease;
+            margin: auto;
+            margin-top: 170px; 
+        }
+        .card h2{
+            background: #9aa7d1;
+            background-position: top;
+            padding:0px;
+            margin: -40px -40px 20px -40px;
+            text-align: left;
+            font-weight:bold;
+            text-shadow: 0 0 10px #b3ffff;
+            margin-bottom:20px;
+        }
+        .card h1{
+            font-weight:bold;
+            text-shadow: 0 0 10px #b3ffff;
+        }
+        .card h3{
+            font-weight:bold;
+            text-shadow: 0 0 10px #b3ffff;
+        }
+        .card p{
+            text-shadow: 0 0 10px #b3ffff;
+            font-size: 18px;
+        }
+        .card:hover {
+            background-color: rgba(249, 205, 255, 0.774);
+        }
+         #extra{
+            float: right;
+            position: fixed;
+            top: 50%;
+            right: 20%;
+            background-color: rgba(221, 208, 236, 0.5);
+            border: 2px solid #9aa7d1;
+            box-shadow: 0 4px 10px rgb(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease; 
+            width: 200px;
+            height: 227px;
+        }
+        #extra h2{
+            background: #9aa7d1;
+            text-align: top;
+            font-weight:bold;
+            text-shadow: 0 0 10px #b3ffff;
+            color: #fdfeff;
+            margin:0px;
+        }
+        img{
+            width: 200px;
+            height:200px;
+        }
+
+        /* I wanted to try something sir hehe */
+
+        #overlay{
+            position: absolute;
+            top: 28px;
+            left: 0;
+            width: 200px;
+            height: 200px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        #extra:hover #overlay{
+         opacity: 1;
+        }
+
+    </style>
+    <body>
+        <div class="card">
+            <h2> About Me! °‧🫧⋆.ೃ࿔*: ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ X</h2>
+            <h1> Hey there! My name's Tony </h1>
+            <h3> Hobby: Drawing ✎𓂃</h3>
+            <p> Fun Fact: I have a fear of escalators </p>
+        </div>
+
+        <div id="extra">
+        <h2> OC!⋆˙⟡ ‎ ‎ ‎ ‎ ‎‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎ ‎  X</h2>
+        <img id="star5" src="assets/gr.jpg">
+            <div id="overlay">
+            <img src="assets/grr.jpg">
+            </div>
+        </div>
+    </body>
+</html>
