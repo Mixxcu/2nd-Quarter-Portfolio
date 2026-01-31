@@ -111,7 +111,7 @@
                 <input type="email" id="email" name="email" novalidate><br><br>
 
                 <label for ="phoneNum">Phone Number:</label>
-                <input type="numeric" id="phoneNum" name="phoneNum" novalidate><br><br>
+                <input type="number" id="phoneNum" name="phoneNum" novalidate><br><br>
 
                 <label for ="grade">Grade Level:</label>
                 <select id="grade" name="grade" required>
@@ -190,11 +190,10 @@
             const phoneNum = document.getElementById("phoneNum");
             const grade = document.getElementById("grade");
             const studentType = document.getElementsByName("intExt");
-            const donationAmount = document.getElementById("donationAmount");
             const textArea = document.getElementById("textArea");
             let signUps = [];
 
-            const fields = document.querySelectorAll("#studentID, #fullName, #bday, #email, #phoneNum, #grade, #donationAmount");
+            const fields = document.querySelectorAll("#studentID, #fullName, #bday, #email, #phoneNum, #grade, #club, #textArea");
             let goReset = false;
 
             form.addEventListener("submit", function(event) {
@@ -202,7 +201,7 @@
                 
                  const studentTypeVal = [...studentType].some(radio => radio.checked);
 
-                if (!studentID.value || !fullName.value || !bday.value || !email.value || !phoneNum.value || !grade.value || !donationAmount.value) {
+                if (!studentID.value || !fullName.value || !bday.value || !email.value || !phoneNum.value || !grade.value || !document.getElementById("club").value || !studentTypeVal) {
                     document.querySelector(".popUp2").classList.add("show");
                 } else {
                     document.querySelector(".popUp1").classList.add("show");
@@ -212,10 +211,6 @@
             if (localStorage.getItem("signUps")) {
                 signUps = JSON.parse(localStorage.getItem("signUps"));
             }
-
-            document.getElementById("viewBtn").addEventListener("click", () => {
-                window.location.href = "viewSignUps.html";
-            });
 
             form.addEventListener("reset", function(event) {
                 if(!goReset) {
@@ -228,8 +223,8 @@
                     email.value = "";
                     phoneNum.value = "";
                     grade.value = "";
-                    intExt.value = "";
-                    donationAmount.value = "";
+                    studentType.forEach(radio => radio.checked = false);
+                    document.getElementById("club").value = "";
                     textArea.value = "";
                 };
             });  
@@ -257,7 +252,6 @@
                         grade: grade.value,
                         studentType: studentTypeValue,
                         club: document.getElementById("club").value,
-                        donation: donationAmount.value,
                         reason: textArea.value
                     };
 
@@ -266,7 +260,9 @@
                     localStorage.setItem("signUps", JSON.stringify(signUps));
 
                     alert("Sign-up saved successfully!");
+                    goReset = true;
                     form.reset();
+                    goReset = false;
             });
 
             document.getElementById("noBtn").addEventListener("click", () => {
@@ -276,7 +272,6 @@
             document.getElementById("yesBtn2").addEventListener("click", () => {
                goReset = true;
                document.querySelector(".popUp3").classList.remove("show");
-               form.goReset = true;
                 form.reset();
             });
 
