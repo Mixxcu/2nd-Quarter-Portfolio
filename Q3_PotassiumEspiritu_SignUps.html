@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>View Sign-Ups</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #b1b0fd;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #020e45;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #020e45;
+        }
+
+        select {
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid #020e45;
+            padding: 8px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #020e45;
+            color: #ffffff;
+        }
+
+        .total {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-weight: bold;
+            text-align: center;
+            color: #c9c7ff;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #020e45;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+<h1>Student Club Sign-Ups</h1>
+
+<div class="container">
+
+    <label for="clubFilter"><strong>Filter by Club:</strong></label>
+    <select id="clubFilter">
+        <option value="">Select Club</option>
+                    <option value="Aksis">Aksis</option>
+                    <option value="Alianti">Alianti</option>
+                    <option value="AstroSoc">AstroSoc</option>
+                    <option value="Bake Club">Bake Club</option>
+                    <option value="Bravura">Bravura</option>
+                    <option value="Celluloid">Celluloid</option>
+                    <option value="Computron">Computron</option>
+                    <option value="Himig Agham">Himig Agham</option>
+                    <option value="Intyale">Intyale</option>
+                    <option value="Invictus">Invictus</option>
+                    <option value="Kamalayan">Kamalayan</option>
+                    <option value="Kislap">Kislap</option>
+                    <option value="Likha">Likha</option>
+                    <option value="Munwha">Munwha</option>
+                    <option value="PISAY.XYZ">PISAY.XYZ</option>
+                    <option value="SCA">SCA</option>
+                    <option value="Sigasig">Sigasig</option>
+                    <option value="Volant">Volant</option>
+    </select>
+
+    <p class="total" id="totalCount"></p>
+
+    <table id="signUpTable">
+        <thead>
+            <tr>
+                <th>Student ID</th>
+                <th>Full Name</th>
+                <th>Grade</th>
+                <th>Club</th>
+                <th>Donation</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+
+    <p class="message" id="message"></p>
+
+    <a href="Q3_2GPotassiumEspiritu.html">← Back to Sign-Up Page</a>
+
+</div>
+
+<script>
+    const tableBody = document.querySelector("#signUpTable tbody");
+    const clubFilter = document.getElementById("clubFilter");
+    const totalCount = document.getElementById("totalCount");
+    const message = document.getElementById("message");
+
+    const signUps = JSON.parse(localStorage.getItem("signUps"));
+
+    function displaySignUps(selectedClub) {
+        tableBody.innerHTML = "";
+        message.textContent = "";
+        totalCount.textContent = "";
+
+        if (!signUps || signUps.length === 0) {
+            message.textContent = "No sign-ups have been saved yet.";
+            return;
+        }
+
+        const filteredSignUps = selectedClub === "ALL"
+            ? signUps
+            : signUps.filter(signUp => signUp.club === selectedClub);
+
+        if (filteredSignUps.length === 0) {
+            message.textContent = "No sign-ups for the selected club.";
+            totalCount.textContent = "Total Sign-Ups: 0";
+            return;
+        }
+
+        filteredSignUps.forEach(signUp => {
+            const row = document.createElement("tr");
+
+            row.innerHTML = `
+                <td>${signUp.studentID}</td>
+                <td>${signUp.fullName}</td>
+                <td>${signUp.grade}</td>
+                <td>${signUp.club}</td>
+                <td>₱${signUp.donation}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+
+        totalCount.textContent = `Total Sign-Ups: ${filteredSignUps.length}`;
+    }
+
+    clubFilter.addEventListener("change", () => {
+        displaySignUps(clubFilter.value);
+    });
+
+    displaySignUps("ALL");
+</script>
+
+</body>
+</html>

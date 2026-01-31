@@ -3,19 +3,20 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #e0f7fa;
+            background-color: #e5e0fa;
             margin: 0;
             padding: 20px;
         }
 
         h1 {
             text-align: center;
-            color: #00796b;
+            color: #020e45;
+            font: bold 24px Arial, sans-serif;
         }
 
         .box {
             background-color: #ffffff;
-            border: 2px solid #00796b;
+            border: 2px solid #020e45;
             border-radius: 10px;
             padding: 20px;
             max-width: 600px;
@@ -29,13 +30,13 @@
         }
 
         input:hover, select:hover, textarea:hover {
-            box-shadow: 0 0 6px rgba(177, 255, 246, 0.797);
-            border-color: #a1fff4;
+            box-shadow: 0 0 6px rgba(7, 0, 68, 0.8);
+            border-color: #1e0270;
         }
 
         input:focus, select:focus, textarea:focus {
-            box-shadow: 0 0 8px rgba(0, 121, 107, 0.8);
-            border-color: #00796b;
+            box-shadow: 0 0 8px rgba(7, 0, 68, 0.8);
+            border-color: #1e0270;
             outline: none;
         }
 
@@ -60,7 +61,7 @@
         }
 
         button {
-            background-color: #00796b;
+            background-color: #020e45;
             color: white;
             padding: 10px 15px;
             border: none;
@@ -69,7 +70,7 @@
         }
 
         button:hover {
-            background-color: #004d40;
+            background-color: #020e45;
         }
 
         .popUp1, .popUp2, .popUp3 {
@@ -79,7 +80,7 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: #ffffff;
-            border: 2px solid #00796b;
+            border: 2px solid #020e45;
             border-radius: 10px;
             padding: 20px;
             z-index: 1000;
@@ -94,9 +95,9 @@
         }
     </style>
     <body>
-        <h1>Sign Up to donate to Team Trees!</h1>
+        <h1>Sign Up to a Club Today!</h1>
         <div class = "box">
-            <form method="post" action="submit" Id ="donationForm">
+            <form method="post" id ="donationForm">
                 <label for ="studentID">Student ID:</label>
                 <input type="numeric" id="studentID" name="studentID" novalidate><br><br>
 
@@ -128,18 +129,33 @@
                 <input type="radio" id="external" name ="intExt" value="external">
                 <label for="external">External Student</label><br><br>
 
-                <label for="donationAmount">Donation Amount:</label>
-                <select id="donationAmount" name="donationAmount" novalidate>
-                    <option value="5"> ₱5 </option>
-                    <option value="10"> ₱10 </option>
-                    <option value="15"> ₱15 </option>
-                    <option value="20"> ₱20 </option>
-                    <option value="25"> ₱25 </option>
+                <label for="club">Club:</label>
+                <select id="club" required>
+                    <option value="">Select Club</option>
+                    <option value="Aksis">Aksis</option>
+                    <option value="Alianti">Alianti</option>
+                    <option value="AstroSoc">AstroSoc</option>
+                    <option value="Bake Club">Bake Club</option>
+                    <option value="Bravura">Bravura</option>
+                    <option value="Celluloid">Celluloid</option>
+                    <option value="Computron">Computron</option>
+                    <option value="Himig Agham">Himig Agham</option>
+                    <option value="Intyale">Intyale</option>
+                    <option value="Invictus">Invictus</option>
+                    <option value="Kamalayan">Kamalayan</option>
+                    <option value="Kislap">Kislap</option>
+                    <option value="Likha">Likha</option>
+                    <option value="Munwha">Munwha</option>
+                    <option value="PISAY.XYZ">PISAY.XYZ</option>
+                    <option value="SCA">SCA</option>
+                    <option value="Sigasig">Sigasig</option>
+                    <option value="Volant">Volant</option>
                 </select><br><br>
 
-                <label for="textArea">Why do you want to donate?</label>
+                <label for="textArea">Why do you want to join your club of choice?</label>
                 <textarea id="textArea" name="textArea" rows="4" cols="67"></textarea><br><br>
 
+                <button type="button" id="viewBtn">View Sign-Ups</button> <br><br>
                 <button type="submit" value="Submit">Submit</button> <br><br>
                 <button type="reset" value="Reset">Reset</button>
             </form>
@@ -176,7 +192,7 @@
             const studentType = document.getElementsByName("intExt");
             const donationAmount = document.getElementById("donationAmount");
             const textArea = document.getElementById("textArea");
-
+            let signUps = [];
 
             const fields = document.querySelectorAll("#studentID, #fullName, #bday, #email, #phoneNum, #grade, #donationAmount");
             let goReset = false;
@@ -191,6 +207,14 @@
                 } else {
                     document.querySelector(".popUp1").classList.add("show");
                 }
+            });
+
+            if (localStorage.getItem("signUps")) {
+                signUps = JSON.parse(localStorage.getItem("signUps"));
+            }
+
+            document.getElementById("viewBtn").addEventListener("click", () => {
+                window.location.href = "viewSignUps.html";
             });
 
             form.addEventListener("reset", function(event) {
@@ -210,9 +234,39 @@
                 };
             });  
             
-            document.getElementById("yesBtn").addEventListener("click", () => {
-            document.querySelector(".popUp1").classList.remove("show");
-             form.submit(); // actually submit
+                document.getElementById("yesBtn").addEventListener("click", () => {
+                    document.querySelector(".popUp1").classList.remove("show");
+
+                    if (localStorage.getItem("signUps")) {
+                        signUps = JSON.parse(localStorage.getItem("signUps"));
+                    }
+
+                    let studentTypeValue = "";
+                    studentType.forEach(radio => {
+                        if (radio.checked) {
+                            studentTypeValue = radio.value;
+                        }
+                    });
+
+                    const newSignUp = {
+                        studentID: studentID.value,
+                        fullName: fullName.value,
+                        birthday: bday.value,
+                        email: email.value,
+                        phone: phoneNum.value,
+                        grade: grade.value,
+                        studentType: studentTypeValue,
+                        club: document.getElementById("club").value,
+                        donation: donationAmount.value,
+                        reason: textArea.value
+                    };
+
+                    signUps.push(newSignUp);
+
+                    localStorage.setItem("signUps", JSON.stringify(signUps));
+
+                    alert("Sign-up saved successfully!");
+                    form.reset();
             });
 
             document.getElementById("noBtn").addEventListener("click", () => {
